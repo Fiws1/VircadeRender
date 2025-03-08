@@ -104,11 +104,29 @@ public class VehiculoController {
     }
 
     @GetMapping("/Vehiculosedit/{id}")
-    public String actualizarVehiculos(@PathVariable("id") int id, @NotNull Model modelo) {
+    public String actualizarVehiculos(@PathVariable("id") int id, @NotNull Model modelo,
+                                      @RequestParam("file") @NotNull MultipartFile imagen) {
         Vehiculo Vehiculo = vehiculoService.findByVehiculo(id);
         List<Tipo_Vehiculo> liistatipovehi = tipoVehiculoService.listarTodosLosTiposVehiculos();
         List<Concesionario> licon = concesionario.ListarConce();
         List<Combustible> licom = combustible.ListarCom();
+
+        if (!imagen.isEmpty()) {
+            String nombreImagen = imagen.getOriginalFilename();
+            Path directorioImagenes = Paths.get("src/main/resources/static/Images");
+            String rutaAbsoluta = directorioImagenes.toFile().getAbsolutePath();
+
+            try {
+                byte[] bytesImg = imagen.getBytes();
+                Path rutaCompleta = Paths.get(rutaAbsoluta + "/" + nombreImagen);
+                Files.write(rutaCompleta, bytesImg);
+
+                Vehiculo.setImagen(nombreImagen);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
+
         modelo.addAttribute("lisTip", liistatipovehi);
         modelo.addAttribute("lisConce", licon);
         modelo.addAttribute("liscombu",licom);
