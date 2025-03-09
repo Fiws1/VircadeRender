@@ -9,6 +9,7 @@ import lombok.*;
 @AllArgsConstructor
 @Data
 @Entity
+@Builder
 @Table(name = "vehiculos")
 public class Vehiculo {
     @Id
@@ -40,15 +41,15 @@ public class Vehiculo {
     @Column(name = "Marca_vehiculo", nullable = false, length = 20)
     private String marcaVehiculo;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "Combustible_vehiculo", nullable = false)
     private Combustible combustibleVehiculo;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "Tipo_vehiculo", nullable = false)
     private Tipo_Vehiculo tipoVehiculo;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "concesionario", nullable = false)
     private Concesionario concesionario;
 

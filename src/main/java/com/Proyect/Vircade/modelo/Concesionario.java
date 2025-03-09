@@ -10,6 +10,7 @@ import lombok.*;
 @AllArgsConstructor
 @Data
 @Entity
+@Builder
 @Table(name = "concesionarios")
 public class Concesionario {
     @Id
@@ -25,7 +26,7 @@ public class Concesionario {
     @Column(name = "Direccion", nullable = false, length = 30)
     private String direccion;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "Disponibilidades", nullable = false)
     private Disponibilidad disponibilidad;
 

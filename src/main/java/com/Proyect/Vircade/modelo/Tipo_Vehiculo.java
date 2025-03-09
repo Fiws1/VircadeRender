@@ -8,6 +8,7 @@ import jakarta.persistence.*;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Table(name = "tipo_Vehiculos")
 public class Tipo_Vehiculo {
     @Id

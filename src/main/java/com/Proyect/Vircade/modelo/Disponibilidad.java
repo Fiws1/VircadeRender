@@ -10,6 +10,7 @@ import lombok.*;
 @AllArgsConstructor
 @Data
 @Entity
+@Builder
 @Table(name = "disponibilidades")
 public class Disponibilidad {
     @Id

@@ -9,6 +9,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Getter
 @Setter
 @Entity
+@Builder
 @Table(name = "citas")
 public class Cita {
     @Id
@@ -26,15 +27,15 @@ public class Cita {
     @Column(name = "Tipo_cita", nullable = false, length = 40)
     private String tipoCita;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "Asesor", nullable = false)
     private Asesor asesor;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "Cliente_relacionado", nullable = false)
     private Usuario clienteRelacionado;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "Concesionario_Asig", nullable = false)
     private Concesionario concesionarioAsig;
 

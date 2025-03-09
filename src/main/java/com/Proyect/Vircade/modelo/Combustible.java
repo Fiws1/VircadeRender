@@ -9,6 +9,7 @@ import jakarta.persistence.*;
 @AllArgsConstructor
 @Data
 @Entity
+@Builder
 @Table(name = "combustibles")
 public class Combustible {
     @Id

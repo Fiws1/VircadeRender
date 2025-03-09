@@ -37,7 +37,6 @@ com\Proyect\Vircade\modelo\Combustible.class
 com\Proyect\Vircade\modelo\Rol.class
 com\Proyect\Vircade\repository\DisponibilidadRepository.class
 com\Proyect\Vircade\controller\Detalles.class
-com\Proyect\Vircade\modelo\Usuario$UsuarioBuilder.class
 com\Proyect\Vircade\controller\CitaController.class
 com\Proyect\Vircade\service\ConcesionarioService.class
 com\Proyect\Vircade\repository\TipovehiculoRepocitory.class
@@ -45,5 +44,4 @@ com\Proyect\Vircade\controller\CombustibleController.class
 com\Proyect\Vircade\modelo\Disponibilidad$DisponibilidadEstado.class
 com\Proyect\Vircade\config\imgConfig.class
 com\Proyect\Vircade\service\TipovehiculoServicio.class
-com\Proyect\Vircade\modelo\Rol$RolBuilder.class
 com\Proyect\Vircade\controller\ReporteController.class

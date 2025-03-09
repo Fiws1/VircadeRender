@@ -11,6 +11,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Builder
 @Table(name = "asesores")
 public class Asesor {
     @Id
@@ -41,7 +42,7 @@ public class Asesor {
     @OneToMany(mappedBy = "asesor", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Cita> cita;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "Concesionario_Asig", nullable = false)
     private Concesionario concesionarioAsig;
 
