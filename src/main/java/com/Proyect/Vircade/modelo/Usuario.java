@@ -21,13 +21,10 @@ public class Usuario {
     @Column(name = "Correo", nullable = false, unique = true, length = 100)
     private String correo;
 
-    @NotBlank
-    @NotEmpty(message = "El campo contraseña no puede estar vacío")
     @Column(name = "Contrasena_Usu", nullable = false)
     private String contrasenaUsu;
 
     @Size(max = 50)
-    @NotBlank
     @NotEmpty(message = "El campo primer nombre no puede estar vacío")
     @Column(name = "Primer_Nombre", nullable = false)
     private String primerNombre;

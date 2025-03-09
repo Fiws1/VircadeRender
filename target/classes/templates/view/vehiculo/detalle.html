@@ -20,6 +20,9 @@
     </center>
     <br>
     <div class="container">
+        <form method="get" class="mb-3">
+            <input type="text" id="searchInput" class="form-control w-25" placeholder="Buscar vehículo...">
+        </form>
         <div class="card bg-light" th:each="tv : ${detalle}">
             <br>
             <div class="card-header bg-dark tex-white" th:text="${titulo}" ></div>
@@ -65,5 +68,16 @@
             <p>Nicolas Salamanca:Diseñador Web</p>
         </div>
     </footer>
+    <script>
+        document.getElementById("searchInput").addEventListener("keyup", function() {
+            let filter = this.value.toLowerCase();
+            let rows = document.querySelectorAll("tbody tr");
+
+            rows.forEach(row => {
+                let text = row.innerText.toLowerCase();
+                row.style.display = text.includes(filter) ? "" : "none";
+            });
+        });
+    </script>
 </body>
 </html>

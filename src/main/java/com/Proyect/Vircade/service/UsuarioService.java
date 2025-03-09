@@ -28,6 +28,10 @@ public class UsuarioService{
         }
     }
 
+    public void guardarUsuario(Usuario usuario) {
+        usuarioRepository.save(usuario);
+    }
+
     public void registrarUsuario(@NotNull Usuario usuario) {
         Rol rol = new Rol();
         rol.setIdRol(2);

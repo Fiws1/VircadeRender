@@ -23,6 +23,11 @@
 </div>
 <br>
 <div class="container" th:if="${not #lists.isEmpty(citas)}">
+    <div class="input-group">
+        <form method="get" class="mb-3">
+            <input type="text" id="searchInput" class="form-control w-25" placeholder="Buscar cita...">
+        </form>
+    </div>
     <div class="card bg-light" th:each="cita : ${citas}">
         <div th:if="${mensajeError}">
             <p style="color: red;" th:text="${mensajeError}"></p>
@@ -65,6 +70,17 @@
         <p>Nicolas Salamanca:Diseñador Web</p>
     </div>
     <br>
+    <script>
+        document.getElementById("searchInput").addEventListener("keyup", function() {
+            let filter = this.value.toLowerCase();
+            let rows = document.querySelectorAll("tbody tr");
+
+            rows.forEach(row => {
+                let text = row.innerText.toLowerCase();
+                row.style.display = text.includes(filter) ? "" : "none";
+            });
+        });
+    </script>
 </footer>
 </body>
 </html>
