@@ -35,6 +35,7 @@
                       th:object="${Vehiculo}"
                       th:action="@{/Vehiculosave}"
                       enctype="multipart/form-data">
+
                     <div class="form-group">
                         <input type="hidden" th:field="*{idVehiculo}">
                         <label for="nomvehiculo">Nombre Vehiculo:</label>
@@ -44,6 +45,7 @@
                                th:field="*{nomvehiculo}"
                                required
                                type="text">
+                        <small></small>
                     </div>
                     <div class="form-group">
                         <label for="linea">Linea del vehiculo:</label>
@@ -85,8 +87,7 @@
                         <label for="imagen">Imagen del vehiculo:</label>
                         <input class="form-control"
                                id="imagen"
-                               name="file"
-                               type="file" required>
+                               name="file"  type="file" required>
                     </div>
                     <div class="form-group">
                         <label for="modeloVehiculo">Modelo del vehiculo:</label>

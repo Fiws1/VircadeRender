@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -43,6 +44,9 @@ public class VehiculoController {
     @GetMapping("/Vehiculos")
     public String listarVehiculos(@RequestParam(defaultValue = "1") int page,
                                   @RequestParam(defaultValue = "10") int pageSize,
+                                  @RequestParam(required = false) String searchTerm,
+                                  @RequestParam(defaultValue = "idVehiculo") String sortBy,
+                                  @RequestParam(defaultValue = "asc") String sortDirection,
                                   @NotNull Model modelo) {
         Page<Vehiculo> paginaVehiculos = vehiculoService.listarVehiculos(PageRequest.of(page - 1, pageSize));
 
@@ -104,36 +108,19 @@ public class VehiculoController {
     }
 
     @GetMapping("/Vehiculosedit/{id}")
-    public String actualizarVehiculos(@PathVariable("id") int id, @NotNull Model modelo,
-                                      @RequestParam("file") @NotNull MultipartFile imagen) {
-        Vehiculo Vehiculo = vehiculoService.findByVehiculo(id);
-        List<Tipo_Vehiculo> liistatipovehi = tipoVehiculoService.listarTodosLosTiposVehiculos();
+    public String editarVehiculos(@PathVariable("id") int id, @NotNull Model modelo) {
+        Vehiculo vehiculo = vehiculoService.findByVehiculo(id);
+        List<Tipo_Vehiculo> listatipovehi = tipoVehiculoService.listarTodosLosTiposVehiculos();
         List<Concesionario> licon = concesionario.ListarConce();
         List<Combustible> licom = combustible.ListarCom();
 
-        if (!imagen.isEmpty()) {
-            String nombreImagen = imagen.getOriginalFilename();
-            Path directorioImagenes = Paths.get("src/main/resources/static/Images");
-            String rutaAbsoluta = directorioImagenes.toFile().getAbsolutePath();
-
-            try {
-                byte[] bytesImg = imagen.getBytes();
-                Path rutaCompleta = Paths.get(rutaAbsoluta + "/" + nombreImagen);
-                Files.write(rutaCompleta, bytesImg);
-
-                Vehiculo.setImagen(nombreImagen);
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        }
-
-        modelo.addAttribute("lisTip", liistatipovehi);
+        modelo.addAttribute("lisTip", listatipovehi);
         modelo.addAttribute("lisConce", licon);
-        modelo.addAttribute("liscombu",licom);
-        modelo.addAttribute("Vehiculo",Vehiculo);
-        modelo.addAttribute("i", "Vehiculos");
-        System.out.println("Vehiculo modificada con exito!");
-        return "view/Vehiculo/modificar";
+        modelo.addAttribute("liscombu", licom);
+        modelo.addAttribute("Vehiculo", vehiculo);
+        modelo.addAttribute("i", "Vehiculos"); // Mantén "i" para identificar la vista
+
+        return "view/vehiculo/modificar"; // Crea una nueva vista para la edición
     }
 
     @DeleteMapping("/Vehiculosde/{id}")
