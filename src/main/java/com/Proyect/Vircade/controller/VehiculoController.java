@@ -42,11 +42,11 @@ public class VehiculoController {
 
     @GetMapping("/Vehiculos")
     public String listarVehiculos(@RequestParam(defaultValue = "1") int page,
-                                  @RequestParam(defaultValue = "10") int size, @NotNull Model modelo) {
-        Pageable pageable = PageRequest.of(page - 1, size);
-        Page<Vehiculo> paginaVehiculos = vehiculoService.listarVehiculos(pageable);
+                                  @RequestParam(defaultValue = "10") int pageSize,
+                                  @NotNull Model modelo) {
+        Page<Vehiculo> paginaVehiculos = vehiculoService.listarVehiculos(PageRequest.of(page - 1, pageSize));
 
-        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("es", "CO")); // Para formato colombiano
+        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("es", "CO"));
         for (Vehiculo vehiculo : paginaVehiculos) {
             vehiculo.setPrecioFormateado(currencyFormat.format(vehiculo.getPrecio()));
         }
@@ -57,8 +57,8 @@ public class VehiculoController {
         List<Combustible> licom = combustible.ListarCom();
         modelo.addAttribute("lisTip", listatipovehi);
         modelo.addAttribute("lisConce", licon);
-        modelo.addAttribute("liscombu",licom);
-        modelo.addAttribute("Vehiculo",vehiculo);
+        modelo.addAttribute("liscombu", licom);
+        modelo.addAttribute("Vehiculo", vehiculo);
         modelo.addAttribute("i", "Vehiculos");
 
         modelo.addAttribute("Vehiculos", paginaVehiculos.getContent());

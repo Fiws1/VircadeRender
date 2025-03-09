@@ -46,7 +46,7 @@ public class TipoVehiculoController {
         Tipo_Vehiculo tipo_vehiculo = servicio.obtenerTiposVehiculosPorId(id);
         modelo.addAttribute("tipo_vehiculo",tipo_vehiculo );
         System.out.println("Tipo de vehiculo se a modificado con exito!");
-        return "/view/tipoVehiculo/modificar";
+        return "view/tipoVehiculo/modificar";
     }
 
     @DeleteMapping("/tipovehiculosde/{id}")

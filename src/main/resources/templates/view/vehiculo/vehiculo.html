@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="es" xmlns:th="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <title>Gestión de Vehiculos</title>
@@ -30,10 +30,15 @@
         <div>
             <a href="#" data-toggle="modal" data-target="#nuevovehiculo" class="btn btn-primary">Agregar vehiculos</a>
         </div>
+        <br>
+        <div class="input-group">
+            <form method="get" class="mb-3">
+                <input type="text" id="searchInput" class="form-control w-25" placeholder="Buscar vehículo...">
+            </form>
+        </div>
         <table id="Solicitudes" style="width:100%" class="table table-bordered mt-3">
             <thead class="thead-dark">
             <tr>
-                <th>ID</th>
                 <th>Vehiculo</th>
                 <th>Linea</th>
                 <th>Cilindraje</th>
@@ -53,7 +58,6 @@
                     <td colspan="14" class="text-center">No hay registros disponibles</td>
                 </tr>
                 <tr th:each="tv:${Vehiculos}">
-                    <td scope="row" th:text="${tv.idVehiculo}"></td>
                     <td th:text="${tv.nomvehiculo}"></td>
                     <td th:text="${tv.linea}"></td>
                     <td th:text="${tv.cilindraje}"></td>
@@ -84,20 +88,18 @@
                 </tr>
             </tbody>
         </table>
-        <div>
-            <nav>
+        <div class="d-flex justify-content-between">
+            <nav aria-label="Paginación">
                 <ul class="pagination">
-                    <li th:if="${currentPage > 1}" class="page-item">
-                        <a class="page-link" th:href="@{/Vehiculos(page=${currentPage - 1})}">Anterior</a>
+                    <li class="page-item" th:if="${currentPage > 1}">
+                        <a class="page-link" th:href="@{/Vehiculos(page=${currentPage - 1}, size=${size})}">Anterior</a>
                     </li>
-
-                    <li th:each="i : ${#numbers.sequence(1, totalPages)}" class="page-item"
-                        th:classappend="${i == currentPage} ? 'active'">
-                        <a class="page-link" th:href="@{/Vehiculos(page=${i})}" th:text="${i}"></a>
+                    <li class="page-item" th:each="i : ${#numbers.sequence(1, totalPages)}"
+                        th:classappend="${i == currentPage} ? 'active' : ''">
+                        <a class="page-link" th:href="@{/Vehiculos(page=${i}, size=${size})}" th:text="${i}"></a>
                     </li>
-
-                    <li th:if="${currentPage < totalPages}" class="page-item">
-                        <a class="page-link" th:href="@{/Vehiculos(page=${currentPage + 1})}">Siguiente</a>
+                    <li class="page-item" th:if="${currentPage < totalPages}">
+                        <a class="page-link" th:href="@{/Vehiculos(page=${currentPage + 1}, size=${size})}">Siguiente</a>
                     </li>
                 </ul>
             </nav>
@@ -258,22 +260,14 @@
     </div>
 </footer>
 <script>
-    new DataTable('#Solicitudes', {
-    language: {
-        search: "Buscar:",
-        paginate: {
-            first: "Primero",
-            last: "Último",
-            next: "Siguiente",
-            previous: "Anterior"
-        },
-        lengthMenu: "Mostrar _MENU_ registros por página",
-        info: "Mostrando _START_ a _END_ de _TOTAL_ registros",
-        infoEmpty: "No hay registros disponibles",
-        infoFiltered: "(filtrado de _MAX_ registros en total)",
-        zeroRecords: "No se encontraron resultados",
-        emptyTable: "No hay datos disponibles en la tabla"
-        }
+    document.getElementById("searchInput").addEventListener("keyup", function() {
+        let filter = this.value.toLowerCase();
+        let rows = document.querySelectorAll("tbody tr");
+
+        rows.forEach(row => {
+            let text = row.innerText.toLowerCase();
+            row.style.display = text.includes(filter) ? "" : "none";
+        });
     });
 </script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"

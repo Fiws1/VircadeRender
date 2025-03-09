@@ -31,6 +31,10 @@ public class VehiculoService {
                 .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado con el correo: " + id));
     }
 
+    public Page<Vehiculo> buscarVehiculos(String searchTerm, Pageable pageable) {
+        return vehiculoRepository.findByMarcaVehiculoContainingIgnoreCaseOrModeloVehiculoContainingIgnoreCase(searchTerm, searchTerm, pageable);
+    }
+
     public Optional<Vehiculo> editarVe(int id) {
         try {
             return vehiculoRepository.findById(id);
