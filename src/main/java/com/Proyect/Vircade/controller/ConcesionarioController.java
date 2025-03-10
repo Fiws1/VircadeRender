@@ -29,9 +29,8 @@ public class ConcesionarioController {
 
     @GetMapping("/Concesionarios")
     public String listarConcesionarios(@RequestParam(defaultValue = "1") int page,
-                                  @RequestParam(defaultValue = "10") int size, @NotNull Model modelo) {
-        Pageable pageable = PageRequest.of(page - 1, size);
-        Page<Concesionario> paginaConcesionarios = concesionarioService.ListarConce(pageable);
+                                       @NotNull Model modelo) {
+        List<Concesionario> paginaConcesionarios = concesionarioService.ListarConce();
 
         Concesionario concesionario = new Concesionario();
         List<Disponibilidad> lidispo = disponibilidadService.ListarDisponibilidad();
@@ -39,11 +38,11 @@ public class ConcesionarioController {
         modelo.addAttribute("Concesionario",concesionario);
         modelo.addAttribute("i", "Concesionarios");
 
-        modelo.addAttribute("Concesionarios", paginaConcesionarios.getContent());
+        modelo.addAttribute("Concesionarios", paginaConcesionarios);
         modelo.addAttribute("currentPage", page);
-        modelo.addAttribute("totalPages", paginaConcesionarios.getTotalPages());
+        modelo.addAttribute("totalPages", paginaConcesionarios);
 
-        return "view/Concesionario/Concesionario"; // nos retorna al archivo estudiantes
+        return "view/concesionario/concesionario"; // nos retorna al archivo estudiantes
     }
 
     @PostMapping("/Concesionariosave")
