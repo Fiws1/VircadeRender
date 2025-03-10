@@ -10,8 +10,6 @@ import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -44,11 +42,8 @@ public class VehiculoController {
     @GetMapping("/Vehiculos")
     public String listarVehiculos(@RequestParam(defaultValue = "1") int page,
                                   @RequestParam(defaultValue = "10") int pageSize,
-                                  @RequestParam(required = false) String searchTerm,
-                                  @RequestParam(defaultValue = "idVehiculo") String sortBy,
-                                  @RequestParam(defaultValue = "asc") String sortDirection,
                                   @NotNull Model modelo) {
-        Page<Vehiculo> paginaVehiculos = vehiculoService.listarVehiculos(PageRequest.of(page - 1, pageSize));
+        List<Vehiculo> paginaVehiculos = vehiculoService.listarTodosLosTiposVehiculos();
 
         NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("es", "CO"));
         for (Vehiculo vehiculo : paginaVehiculos) {
@@ -65,9 +60,8 @@ public class VehiculoController {
         modelo.addAttribute("Vehiculo", vehiculo);
         modelo.addAttribute("i", "Vehiculos");
 
-        modelo.addAttribute("Vehiculos", paginaVehiculos.getContent());
-        modelo.addAttribute("currentPage", page);
-        modelo.addAttribute("totalPages", paginaVehiculos.getTotalPages());
+        modelo.addAttribute("Vehiculos", paginaVehiculos);
+        modelo.addAttribute("totalPages", paginaVehiculos);
 
         return "view/vehiculo/vehiculo"; // nos retorna al archivo estudiantes
     }

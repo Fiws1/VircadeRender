@@ -21,7 +21,7 @@
     </div>
 </header>
 <br>
-<div class="container mt-4" align="center">
+<div class="container mt-3" align="center">
     <div th:if="${mensaje}" class="alert alert-success">
         <p th:text="${mensaje}"></p>
     </div>
@@ -31,12 +31,7 @@
             <a href="#" data-toggle="modal" data-target="#nuevovehiculo" class="btn btn-primary">Agregar vehiculos</a>
         </div>
         <br>
-        <div class="input-group">
-            <form method="get" class="mb-3">
-                <input type="text" id="searchInput" class="form-control w-25" placeholder="Buscar vehículo...">
-            </form>
-        </div>
-        <table id="Solicitudes" style="width:100%" class="table table-bordered mt-3">
+        <table id="Solicitudes" style="width:100%" class="table table-bordered mt-1">
             <thead class="thead-dark">
             <tr>
                 <th>Id</th>
@@ -55,59 +50,43 @@
             </tr>
             </thead>
             <tbody>
-                <tr th:if="${Vehiculos == null || Vehiculos.isEmpty()}">
-                    <td colspan="14" class="text-center">No hay registros disponibles</td>
-                </tr>
-                <tr th:each="tv:${Vehiculos}">
-                    <td th:text="${tv.idVehiculo}"></td>
-                    <td th:text="${tv.nomvehiculo}"></td>
-                    <td th:text="${tv.linea}"></td>
-                    <td th:text="${tv.cilindraje}"></td>
-                    <td>
-                        <div th:style="'background-color: ' + ${tv.color} + '; width: 50px; height: 50px; border: 1px solid #ccc;'"></div>
-                    </td>
-                    <td th:text="${tv.precioFormateado}"></td>
-                    <td>
-                        <img class="img-thumbnail rounded float-left"
-                             th:src="@{/Images/{imagen}(imagen=${tv.imagen})}"
-                             th:alt="${tv.imagen}"
-                             style="max-width:100%;">
-                    </td>
-                    <td th:text="${tv.modeloVehiculo}"></td>
-                    <td th:text="${tv.marcaVehiculo}"></td>
-                    <td th:text="${tv.combustibleVehiculo.tipoCombustible}"></td>
-                    <td th:text="${tv.tipoVehiculo.tipovehiculo}"></td>
-                    <td th:text="${tv.concesionario.nombreConcesionario}"></td>
-                    <td>
-                        <a class="btn btn-success"
-                           th:href="@{/Vehiculosedit/{id}(id=${tv.idVehiculo})}"
-                           title="Editar Registro">
-                            Editar
-                        </a>
-                        <a class="btn btn-danger" th:href="@{/Vehiculosde/} + ${tv.idVehiculo}"
-                           th:text="'Eliminar'" title="Eliminar registro"
-                           onclick="return confirm('¿Estas seguro de eliminar este registro?')">
-                        </a>
-                    </td>
-                </tr>
+            <tr th:if="${Vehiculos == null || Vehiculos.isEmpty()}">
+                <td colspan="14" class="text-center">No hay registros disponibles</td>
+            </tr>
+            <tr th:each="tv:${Vehiculos}">
+                <td th:text="${tv.idVehiculo}"></td>
+                <td th:text="${tv.nomvehiculo}"></td>
+                <td th:text="${tv.linea}"></td>
+                <td th:text="${tv.cilindraje}"></td>
+                <td>
+                    <div th:style="'background-color: ' + ${tv.color} + '; width: 40px; height: 40px; border: 1px solid #ccc;'"></div>
+                </td>
+                <td th:text="${tv.precioFormateado}"></td>
+                <td style="width: 150px; height: 120px; text-align: center; vertical-align: middle;">
+                    <img class="img-thumbnail rounded float-left"
+                         th:src="@{/Images/{imagen}(imagen=${tv.imagen})}"
+                         th:alt="${tv.imagen}"
+                         style="max-width: 110%; max-height: 110%;">
+                </td>
+                <td th:text="${tv.modeloVehiculo}"></td>
+                <td  th:text="${tv.marcaVehiculo}"></td>
+                <td th:text="${tv.combustibleVehiculo.tipoCombustible}"></td>
+                <td th:text="${tv.tipoVehiculo.tipovehiculo}"></td>
+                <td th:text="${tv.concesionario.nombreConcesionario}"></td>
+                <td>
+                    <a class="btn btn-success"
+                       th:href="@{/Vehiculosedit/{id}(id=${tv.idVehiculo})}"
+                       title="Editar Registro">
+                        Editar
+                    </a>
+                    <a class="btn btn-danger" th:href="@{/Vehiculosde/} + ${tv.idVehiculo}"
+                       th:text="'Eliminar'" title="Eliminar registro"
+                       onclick="return confirm('¿Estas seguro de eliminar este registro?')">
+                    </a>
+                </td>
+            </tr>
             </tbody>
         </table>
-        <div class="d-flex justify-content-between">
-            <nav aria-label="Paginación">
-                <ul class="pagination">
-                    <li class="page-item" th:if="${currentPage > 1}">
-                        <a class="page-link" th:href="@{/Vehiculos(page=${currentPage - 1}, size=${size})}">Anterior</a>
-                    </li>
-                    <li class="page-item" th:each="i : ${#numbers.sequence(1, totalPages)}"
-                        th:classappend="${i == currentPage} ? 'active' : ''">
-                        <a class="page-link" th:href="@{/Vehiculos(page=${i}, size=${size})}" th:text="${i}"></a>
-                    </li>
-                    <li class="page-item" th:if="${currentPage < totalPages}">
-                        <a class="page-link" th:href="@{/Vehiculos(page=${currentPage + 1}, size=${size})}">Siguiente</a>
-                    </li>
-                </ul>
-            </nav>
-        </div>
     </form>
 </div>
 <!-- Modal para agregar un nuevo tipo de vehículo -->
@@ -262,21 +241,21 @@
         <p>Nicolas Salamanca:Diseñador Web</p>
     </div>
 </footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+<script src="https://cdn.datatables.net/2.0.2/js/dataTables.js"></script>
 <script>
-    document.getElementById("searchInput").addEventListener("keyup", function() {
-        let filter = this.value.toLowerCase();
-        let rows = document.querySelectorAll("tbody tr");
-
-        rows.forEach(row => {
-            let text = row.innerText.toLowerCase();
-            row.style.display = text.includes(filter) ? "" : "none";
-        });
+    new DataTable('#Solicitudes', {
+        language: {
+            search: "Buscar:",
+            lengthMenu: "Mostrar _MENU_ registros por página",
+            info: "Mostrando _START_ a _END_ de _TOTAL_ registros",
+            infoEmpty: "No hay registros disponibles",
+            infoFiltered: "(filtrado de _MAX_ registros en total)",
+            zeroRecords: "No se encontraron resultados",
+            emptyTable: "No hay datos disponibles en la tabla"
+        }
     });
 </script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
-        integrity="sha384-IQsoLXlYBb2HnENP+ghz8hxI4Q6RAcn9GqE89eUtD5isD2Bg/uJ9Tory7kPpMP4h"
-        crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
-        integrity="sha384-cVKIPhG81rxpGoYKo1pm" crossorigin="anonymous"></script>
 </body>
 </html>

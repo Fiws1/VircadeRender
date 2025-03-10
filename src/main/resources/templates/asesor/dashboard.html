@@ -98,17 +98,16 @@
         <h3>Citas</h3>
         <ul class="navbar-nav">
             <li class="navbar-nav">
-                <a th:href="@{citas}" class="btn">Registro de citas</a>
+                <a th:href="@{/citas}" class="btn">Registro de citas</a>
             </li>
         </ul>
         <h3>Visita los vehiculos</h3>
         <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link" th:href="@{/detalle}">Vehiculos</a>
+            <li class="navbar-nav">
+                <a class="btn" th:href="@{/detalle}">Vehiculos</a>
             </li>
         </ul>
     </div>
-
     <div class="col-md-9">
         <div class="col-12">
             <center><h2>Vehículos más seguros</h2></center>
@@ -117,43 +116,39 @@
             <div class="col">
                 <!--Tabla de carros-->
                 <table id="Solicitudes" class="display" style="width:100%">
-                    <thead>
+                    <thead style="width:100%" class="table table-bordered mt-3">
                     <tr>
-                        <th># Puesto</th>
-                        <th>Nombre de Vehiculo</th>
+                        <th>Id</th>
+                        <th>Vehiculo</th>
+                        <th>Precio</th>
+                        <th>Modelo</th>
                         <th>Marca</th>
-                        <th>Concesionario</th>
+                        <th>Combustible</th>
+                        <th>Tipo de vehiculo</th>
+                        <th>Concecionario</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Renault Alaskan</td>
-                        <td>Renault</td>
-                        <td>Renew_Autostok-Renault</td>
+                    <tr th:if="${Vehiculos == null || Vehiculos.isEmpty()}">
+                        <td colspan="14" class="text-center">No hay registros disponibles</td>
                     </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Chevrolet Onix Turbo</td>
-                        <td>Chevrolet</td>
-                        <td>Chevrolet San Jorge</td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>Renault Stepway</td>
-                        <td>Renault</td>
-                        <td>Renew_Autostok-Renault</td>
+                    <tr th:each="tv:${Vehiculos}">
+                        <td th:text="${tv.idVehiculo}"></td>
+                        <td th:text="${tv.nomvehiculo}"></td>
+                        <td th:text="${tv.precioFormateado}"></td>
+                        <td th:text="${tv.modeloVehiculo}"></td>
+                        <td th:text="${tv.marcaVehiculo}"></td>
+                        <td th:text="${tv.combustibleVehiculo.tipoCombustible}"></td>
+                        <td th:text="${tv.tipoVehiculo.tipovehiculo}"></td>
+                        <td th:text="${tv.concesionario.nombreConcesionario}"></td>
                     </tr>
                     </tbody>
                 </table>
-                <center>
-                    <img th:src="@{/img/3renolt.jpg}" width="50%"  alt="">
-                </center>
                 <br>
+                <center><img th:src="@{/img/3renolt.jpg}" width="50%"  alt=""></center>
             </div>
         </div>
     </div>
-    <br><br>
     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="logoutModalLabel"
          aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -174,44 +169,44 @@
             </div>
         </div>
     </div>
-</div>
-<div class="modal fade" id="guardarUsu" tabindex="-1" aria-labelledby="guardarUsuLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="guardarUsuLabel">Modificar Información del Usuario</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form th:action="@{/usuario/modificar}" method="post" th:object="${usuario}">
-                    <div class="mb-3">
-                        <input type="hidden" th:field="*{correo}">
-                        <input type="hidden" th:field="*{contrasenaUsu}">
-                        <label for="primerNombre" class="form-label">Primer Nombre</label>
-                        <input type="text" class="form-control" id="primerNombre" th:field="*{primerNombre}">
-                    </div>
-                    <div class="mb-3">
-                        <label for="segundoNombre" class="form-label">Segundo Nombre</label>
-                        <input type="text" class="form-control" id="segundoNombre" th:field="*{segundoNombre}">
-                    </div>
-                    <div class="mb-3">
-                        <label for="primerApellido" class="form-label">Primer Apellido</label>
-                        <input type="text" class="form-control" id="primerApellido" th:field="*{primerApellido}">
-                    </div>
-                    <div class="mb-3">
-                        <label for="segundoApellido" class="form-label">Segundo Apellido</label>
-                        <input type="text" class="form-control" id="segundoApellido" th:field="*{segundoApellido}">
-                    </div>
-                    <div class="mb-3">
-                        <label for="numeroTelefono" class="form-label">Número de Teléfono</label>
-                        <input type="text" class="form-control" id="numeroTelefono" th:field="*{numeroTelefono}">
-                        <input type="hidden" th:field="*{rol}">
-                    </div>
-                    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+    <div class="modal fade" id="guardarUsu" tabindex="-1" aria-labelledby="guardarUsuLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="guardarUsuLabel">Modificar Información del Usuario</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form th:action="@{/usuario/modificar}" method="post" th:object="${usuario}">
+                        <div class="mb-3">
+                            <input type="hidden" th:field="*{correo}">
+                            <input type="hidden" th:field="*{contrasenaUsu}">
+                            <label for="primerNombre" class="form-label">Primer Nombre</label>
+                            <input type="text" class="form-control" id="primerNombre" th:field="*{primerNombre}">
+                        </div>
+                        <div class="mb-3">
+                            <label for="segundoNombre" class="form-label">Segundo Nombre</label>
+                            <input type="text" class="form-control" id="segundoNombre" th:field="*{segundoNombre}">
+                        </div>
+                        <div class="mb-3">
+                            <label for="primerApellido" class="form-label">Primer Apellido</label>
+                            <input type="text" class="form-control" id="primerApellido" th:field="*{primerApellido}">
+                        </div>
+                        <div class="mb-3">
+                            <label for="segundoApellido" class="form-label">Segundo Apellido</label>
+                            <input type="text" class="form-control" id="segundoApellido" th:field="*{segundoApellido}">
+                        </div>
+                        <div class="mb-3">
+                            <label for="numeroTelefono" class="form-label">Número de Teléfono</label>
+                            <input type="text" class="form-control" id="numeroTelefono" th:field="*{numeroTelefono}">
+                            <input type="hidden" th:field="*{rol}">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                </div>
             </div>
         </div>
     </div>
@@ -238,6 +233,9 @@
         <p>Nicolas Salamanca:Diseñador Web</p>
     </div>
 </footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+<script src="https://cdn.datatables.net/2.0.2/js/dataTables.js"></script>
 <script>
     new DataTable('#Solicitudes', {
         language: {
@@ -257,13 +255,5 @@
         }
     });
 </script>
-<script
-        src="https://code.jquery.com/jquery-3.7.1.js"
-        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
-        crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-        crossorigin="anonymous"></script>
 </body>
 </html>

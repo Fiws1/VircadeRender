@@ -116,38 +116,33 @@
             <div class="col">
                 <!--Tabla de carros-->
                 <table id="Solicitudes" class="display" style="width:100%">
-                    <thead>
+                    <thead style="width:100%" class="table table-bordered mt-3">
                     <tr>
-                        <th># Puesto</th>
-                        <th>Nombre de Vehiculo</th>
+                        <th>Id</th>
+                        <th>Vehiculo</th>
+                        <th>Precio</th>
+                        <th>Modelo</th>
                         <th>Marca</th>
-                        <th>Concesionario</th>
-                        <th>Visualizar</th>
+                        <th>Combustible</th>
+                        <th>Tipo de vehiculo</th>
+                        <th>Concecionario</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Renault Alaskan</td>
-                        <td>Renault</td>
-                        <td>Renew_Autostok-Renault</td>
-                        <td><a class="nav-link" href="vehiculomas seguro_alaskan.html">Ver</a></td>
-
+                    <tr th:if="${Vehiculos == null || Vehiculos.isEmpty()}">
+                        <td colspan="14" class="text-center">No hay registros disponibles</td>
                     </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Chevrolet Onix Turbo</td>
-                        <td>Chevrolet</td>
-                        <td>Chevrolet San Jorge</td>
-                        <td><a class="nav-link" href="vehiculomas_seguro_chevroletonixturbo.html">Ver</a></td>
+                    <tr th:each="tv:${Vehiculos}">
+                        <td th:text="${tv.idVehiculo}"></td>
+                        <td th:text="${tv.nomvehiculo}"></td>
+                        <td th:text="${tv.precioFormateado}"></td>
+                        <td th:text="${tv.modeloVehiculo}"></td>
+                        <td th:text="${tv.marcaVehiculo}"></td>
+                        <td th:text="${tv.combustibleVehiculo.tipoCombustible}"></td>
+                        <td th:text="${tv.tipoVehiculo.tipovehiculo}"></td>
+                        <td th:text="${tv.concesionario.nombreConcesionario}"></td>
                     </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>Renault Stepway</td>
-                        <td>Renault</td>
-                        <td>Renew_Autostok-Renault</td>
-                        <td><a class="nav-link" href="vehiculomas_seguro_renaultstepway.html">Ver</a></td>
-                    </tr>
+                    </tbody>
                 </table>
                 <center><img th:src="@{/img/3renolt.jpg}" width="50%"  alt=""></center>
                 <br>

@@ -88,8 +88,9 @@
                 </div>
             </div>
         </div>
-        <br>
-        <li><button onclick="window.location.href='/admin/descargar-reporte'">Descargar PDF</button></li>
+        <ul>
+            <li><button onclick="window.location.href='/admin/descargar-reporte'">Descargar PDF</button></li>
+        </ul>
         <h3>Concesionario</h3>
         <ul class="navbar-nav">
             <li class="nav-item"><a class="nav-link" th:href="@{/Concesionarios}">Consultar Concesionario</a></li>
@@ -115,100 +116,97 @@
             <div class="col">
                 <!--Tabla de carros-->
                 <table id="Solicitudes" class="display" style="width:100%">
-                    <thead>
-                        <tr>
-                            <th># Puesto</th>
-                            <th>Nombre de Vehiculo</th>
-                            <th>Marca</th>
-                            <th>Concesionario</th>
-                        </tr>
+                    <thead style="width:100%" class="table table-bordered mt-3">
+                    <tr>
+                        <th>Id</th>
+                        <th>Vehiculo</th>
+                        <th>Precio</th>
+                        <th>Modelo</th>
+                        <th>Marca</th>
+                        <th>Combustible</th>
+                        <th>Tipo de vehiculo</th>
+                        <th>Concecionario</th>
+                    </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Renault Alaskan</td>
-                            <td>Renault</td>
-                            <td>Renew_Autostok-Renault</td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>Chevrolet Onix Turbo</td>
-                            <td>Chevrolet</td>
-                            <td>Chevrolet San Jorge</td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>Renault Stepway</td>
-                            <td>Renault</td>
-                            <td>Renew_Autostok-Renault</td>
-                        </tr>
+                    <tr th:if="${Vehiculos == null || Vehiculos.isEmpty()}">
+                        <td colspan="14" class="text-center">No hay registros disponibles</td>
+                    </tr>
+                    <tr th:each="tv:${Vehiculos}">
+                        <td th:text="${tv.idVehiculo}"></td>
+                        <td th:text="${tv.nomvehiculo}"></td>
+                        <td th:text="${tv.precioFormateado}"></td>
+                        <td th:text="${tv.modeloVehiculo}"></td>
+                        <td th:text="${tv.marcaVehiculo}"></td>
+                        <td th:text="${tv.combustibleVehiculo.tipoCombustible}"></td>
+                        <td th:text="${tv.tipoVehiculo.tipovehiculo}"></td>
+                        <td th:text="${tv.concesionario.nombreConcesionario}"></td>
+                    </tr>
                     </tbody>
                 </table>
-                <center>
-                    <img th:src="@{/img/3renolt.jpg}" width="50%"  alt="">
-                </center>
                 <br>
+                <center><img th:src="@{/img/3renolt.jpg}" width="50%"  alt=""></center>
             </div>
         </div>
     </div>
-</div>
-<div class="modal fade" id="guardarUsu" tabindex="-1" aria-labelledby="guardarUsuLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="guardarUsuLabel">Modificar Información del Usuario</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form th:action="@{/usuario/modificar}" method="post" th:object="${usuario}">
-                    <div class="mb-3">
-                        <input type="hidden" th:field="*{correo}">
-                        <input type="hidden" th:field="*{contrasenaUsu}">
-                        <label for="primerNombre" class="form-label">Primer Nombre</label>
-                        <input type="text" class="form-control" id="primerNombre" th:field="*{primerNombre}">
-                    </div>
-                    <div class="mb-3">
-                        <label for="segundoNombre" class="form-label">Segundo Nombre</label>
-                        <input type="text" class="form-control" id="segundoNombre" th:field="*{segundoNombre}">
-                    </div>
-                    <div class="mb-3">
-                        <label for="primerApellido" class="form-label">Primer Apellido</label>
-                        <input type="text" class="form-control" id="primerApellido" th:field="*{primerApellido}">
-                    </div>
-                    <div class="mb-3">
-                        <label for="segundoApellido" class="form-label">Segundo Apellido</label>
-                        <input type="text" class="form-control" id="segundoApellido" th:field="*{segundoApellido}">
-                    </div>
-                    <div class="mb-3">
-                        <label for="numeroTelefono" class="form-label">Número de Teléfono</label>
-                        <input type="text" class="form-control" id="numeroTelefono" th:field="*{numeroTelefono}">
-                        <input type="hidden" th:field="*{rol}">
-                    </div>
-                    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+    <div class="modal fade" id="guardarUsu" tabindex="-1" aria-labelledby="guardarUsuLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="guardarUsuLabel">Modificar Información del Usuario</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form th:action="@{/usuario/modificar}" method="post" th:object="${usuario}">
+                        <div class="mb-3">
+                            <input type="hidden" th:field="*{correo}">
+                            <input type="hidden" th:field="*{contrasenaUsu}">
+                            <label for="primerNombre" class="form-label">Primer Nombre</label>
+                            <input type="text" class="form-control" id="primerNombre" th:field="*{primerNombre}">
+                        </div>
+                        <div class="mb-3">
+                            <label for="segundoNombre" class="form-label">Segundo Nombre</label>
+                            <input type="text" class="form-control" id="segundoNombre" th:field="*{segundoNombre}">
+                        </div>
+                        <div class="mb-3">
+                            <label for="primerApellido" class="form-label">Primer Apellido</label>
+                            <input type="text" class="form-control" id="primerApellido" th:field="*{primerApellido}">
+                        </div>
+                        <div class="mb-3">
+                            <label for="segundoApellido" class="form-label">Segundo Apellido</label>
+                            <input type="text" class="form-control" id="segundoApellido" th:field="*{segundoApellido}">
+                        </div>
+                        <div class="mb-3">
+                            <label for="numeroTelefono" class="form-label">Número de Teléfono</label>
+                            <input type="text" class="form-control" id="numeroTelefono" th:field="*{numeroTelefono}">
+                            <input type="hidden" th:field="*{rol}">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                </div>
             </div>
         </div>
-    </div>
-</div>
-<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="logoutModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="logoutModalLabel">Cerrar sesión</h5>
-                <button type="button" class="close ml-auto" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                ¿Estás seguro de que deseas cerrar sesión?
-            </div>
-            <div class="modal-footer ">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                <a th:href="@{/logout}" class="btn btn-light ">Cerrar sesión</a>
+        <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="logoutModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="logoutModalLabel">Cerrar sesión</h5>
+                        <button type="button" class="close ml-auto" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        ¿Estás seguro de que deseas cerrar sesión?
+                    </div>
+                    <div class="modal-footer ">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <a th:href="@{/logout}" class="btn btn-light ">Cerrar sesión</a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -225,8 +223,9 @@
         <img th:src="@{/img/pic_whats.png}" alt="Whatsapp"/>
         <img th:src="@{/img/pic_face.png}" alt="Facebook"/>
         <img th:src="@{/img/pic_insta.png}" alt="Instagram"/>
-        <p>Correo: <br/>
-            vircade@gmail.com</p>
+        <p>Correo: <br>
+            vircade@gmail.com
+        </p>
     </div>
     <div style="text-align: center;" class="nombres">
         <p>Laura Daniela Benavides Rodriguez: Diseñadora Backend</p>
@@ -235,9 +234,7 @@
         <p>Nicolas Salamanca:Diseñador Web</p>
     </div>
 </footer>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 <script src="https://cdn.datatables.net/2.0.2/js/dataTables.js"></script>
 <script>
