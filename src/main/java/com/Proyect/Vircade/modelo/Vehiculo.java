@@ -32,7 +32,7 @@ public class Vehiculo {
     @Column(name = "Precio", nullable = false)
     private int precio;
 
-    @Column(name = "Imagen", nullable = false, length = 255)
+    @Column(name = "Imagen", length = 255)
     private String imagen;
 
     @Column(name = "Modelo_vehiculo", nullable = false, length = 40)

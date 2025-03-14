@@ -86,11 +86,11 @@
                     <div class="form-group">
                         <label for="imagen">Imagen del vehículo:</label>
                         <div>
-                            <img th:src="${Vehiculo.imagen}" alt="Imagen actual" style="max-width: 150px; max-height: 150px;"/>
+                            <img th:src="${Vehiculo.imagen}" th:alt="${tv.imagen}" alt="Imagen actual" style="max-width: 150px; max-height: 150px;"/>
                         </div>
                         <input class="form-control"
                                id="imagen"
-                               name="file"  type="file">
+                               name="file" type="file">
                         <small>(Dejar en blanco si no desea cambiar la imagen)</small>
                     </div>
                     <div class="form-group">
