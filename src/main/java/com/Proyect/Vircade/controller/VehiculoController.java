@@ -68,7 +68,6 @@ public class VehiculoController {
     public String guardarVehiculos(Vehiculo vehiculo,
                                    @NotNull Model modelo,
                                    @RequestParam("file") @NotNull MultipartFile imagen) {
-
         List<Tipo_Vehiculo> liistatipovehi = tipoVehiculoService.listarTodosLosTiposVehiculos();
         List<Concesionario> licon = concesionario.ListarConce();
         List<Combustible> licom = combustible.ListarCom();
