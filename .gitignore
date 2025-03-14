@@ -1,0 +1,28 @@
+HELP.md
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+### IntelliJ IDEA ###
+.idea/
+*.class
+*.log
+/target/*
+!/target/.Vircade-0.0.1-SNAPSHOT.jar
+!/target/.Vircade-0.0.1-SNAPSHOT.jar.original
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+
+### VS Code ###
+.vscode/
